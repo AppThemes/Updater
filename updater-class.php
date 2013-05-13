@@ -19,9 +19,11 @@ abstract class APP_Upgrader {
 	}
 
 	static function disable_old_updater() {
-		remove_filter( 'http_request_args', array( 'APP_Updater', 'exclude_themes' ), 10, 2 );
-		remove_filter( 'http_response', array( 'APP_Updater', 'alter_update_requests' ), 10, 3 );
-		remove_action( 'all_admin_notices', array( 'APP_Updater', 'display_warning' ) );
+		if ( class_exists( 'APP_Updater' ) ) {
+			remove_filter( 'http_request_args', array( 'APP_Updater', 'exclude_themes' ), 10, 2 );
+			remove_filter( 'http_response', array( 'APP_Updater', 'alter_update_requests' ), 10, 3 );
+			remove_action( 'all_admin_notices', array( 'APP_Updater', 'display_warning' ) );
+		}
 	}
 
 	function __construct() {
@@ -46,6 +48,7 @@ abstract class APP_Upgrader {
 			return false;
 
 		$args = array();
+		$args['timeout'] = 30;
 
 		$args['body'] = array_merge( $payload, array(
 			'api_key' => APP_Upgrader::get_key()
@@ -186,7 +189,7 @@ class APP_Theme_Upgrader extends APP_Upgrader {
 		if ( isset( $themes_update->response[ $stylesheet ] ) ) {
 ?>
 				<div id="message" class="error">
-					<p><?php echo sprintf( __( '<strong>IMPORTANT</strong>: If you have made any modifications to the AppThemes files, they will be overwritten if you proceed with the automatic update. Those with modified theme files should do a manual update instead. Visit your <a href="%1$s" target="_blank">customer dashboard</a> to download the latest version.', 'appthemes' ), 'http://www.appthemes.com/cp/member.php' ); ?></p>
+					<p><?php echo sprintf( __( '<strong>IMPORTANT</strong>: If you have made any modifications to the AppThemes files, they will be overwritten if you proceed with the automatic update. Those with modified theme files should do a manual update instead. Visit your <a href="%1$s" target="_blank">customer dashboard</a> to download the latest version.', 'appthemes' ), 'https://my.appthemes.com/' ); ?></p>
 				</div>
 <?php
 		}

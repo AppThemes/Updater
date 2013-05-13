@@ -15,6 +15,9 @@ from AppThemes.
 
 == Changelog ==
 
+= 1.2.1 =
+* fixed not finding updates
+
 = 1.2 =
 * works with items from marketplace.appthemes.com
 * added "Check for updates now" button
