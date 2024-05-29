@@ -113,6 +113,7 @@ abstract class APP_Upgrader {
 class APP_Theme_Upgrader extends APP_Upgrader {
 
 	protected $app_url = 'https://api.appthemes.com/themes/update-check/2.0/';
+	protected $current_theme;
 
 	protected function get_hardcoded_items() {
 		return array( 'vantage', 'qualitycontrol', 'classipress', 'clipper', 'jobroller' );
